@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Random canvas circles</title>
+
+    <header>
+        <h1>Rock paper scissors game</h1> 
+    </head>
+    </header>
+    <div class = "score-board">
+        <div id="user-label" class="badge">user</div>
+        <div id="computer-label" class="badge">comp</div>
+         <span id= "user-score">0</span>:<span id ="computer-score">0
+            </span></div>
+            <div class = "result">
+                 <p>paper covers rock. You win</p>
+                 </div>
+            <div class = "choices">
+            <div class = "choice" id="r">
+            <img src = "/Pictures/rock paper scissors/rock.png" alt="" />
+            </div>
+            <div class = "choice" id="p">
+            <img src = "/Pictures/rock paper scissors/paper.png" alt =""/>
+            </div>
+            <div class = "choice" id="s">
+            <img src = "/Pictures/rock paper scissors/scissors.png" alt =""/>
+            </div>
+        </div>
+        <p id="action-message">Make a move</p>
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+    
+            body{
+                background-color: #24272E;
+            }
+    
+            header {
+                background-color: white;
+            }
+    
+            header > h1{
+                color: #25272E;
+                text-align: center;
+                font-family: Asap, sans-serif;
+            }
+    
+            .score-board{
+                margin: 30px auto;
+                border: 3px solid white;
+                width: 250px;
+                height: 100px;
+                color: white;
+                font-size: 30px;
+                text-align: center;
+                padding: 35px 35px;
+                position: relative;
+    
+            }
+    
+            .badge{
+                background-color: yellow;
+                font-size: 20px;
+                padding: 5px 10px;
+                font-family: sans-serif;
+                font-style: italic;
+                color:green;
+                font-weight: 800;
+            }
+    
+            #user-label {
+                position: absolute;
+                bottom:30px;
+                left: -35px;
+                width: 90px;
+            }
+    
+            #computer-label {
+                position: absolute;
+                right: -50px;
+                width: 90px;
+                bottom: 30px;
+            }
+    
+            .result{
+                font-size: 45px;
+                color: white;
+            }
+                   
+               
+            .result > p{
+                text-align: center;
+                font-family: sans-serif;
+                font-weight: bold;
+                padding-bottom: 20px 20px; 
+            }
+    
+            .choices{
+                text-align:center;
+                margin: 50px 0;             
+            }
+    
+            .choice{
+                display: inline-block;
+                padding: 20px; 
+                transition: all 1.0s ease;      
+                
+            }
+    
+            .choice:hover{
+                cursor: pointer;
+                background-color: violet;
+            }
+    
+            #action-message{
+                text-align: center;
+                font-size: 30px;
+                color: blue;
+            }
+    
+            </style>
+    
+    <script>
+        let compScore = 0;
+        let userScore = 0;
+        const compScore_span = document.getElementById("computer-score");
+        const userScore_span = document.getElementById("user-score");
+        const scoreBoard_div = document.querySelector(".score-board");
+        const result_p = document.querySelector(".result > p");
+        const r_div = document.getElementById("r");
+        const p_div = document.getElementById("p");
+        const s_div = document.getElementById("s");
+
+        function convert(letter){
+            if (letter === "r"){
+                return "rock";
+            }
+            if (letter === "p"){
+                return "paper";
+            }
+
+            else{
+                return "scissors";
+            }
+        }
+
+        function getCompChoice(){
+            const choices = ["r", "p", "s"]
+            let randomChoice = (Math.floor(Math.random() *3));
+            return choices[randomChoice];
+        }
+
+        function win(userChoice, computerChoice){
+            userScore ++;
+            userScore_span.innerHTML = userScore;
+            compScore_span.innerHTML = compScore;
+            const userSup = "(user)".fontsize(5).sup();
+            const compSup = "(comp)".fontsize(5).sup();
+            result_p.innerHTML= `${convert(userChoice)}${userSup} beats ${convert(computerChoice)}${compSup}. You win!!`;
+        }
+        function lose(userChoice, computerChoice){
+            compScore ++;
+            userScore_span.innerHTML = userScore;
+            compScore_span.innerHTML = compScore;
+            const userSup = "(user)".fontsize(5).sup();
+            const compSup = "(comp)".fontsize(5).sup();
+            result_p.innerHTML= `${convert(userChoice)}${userSup} loses to ${convert(computerChoice)}${compSup}. You lose!!`;
+
+        }
+        function draw(userChoice, computerChoice){
+            userScore_span.innerHTML = userScore;
+            compScore_span.innerHTML = compScore;
+            const userSup = "(user)".fontsize(5).sup();
+            const compSup = "(comp)".fontsize(5).sup();
+            result_p.innerHTML= `${convert(userChoice)}${userSup} is equal to ${convert(computerChoice)}${compSup}. It'\s a draw.`;
+        }
+
+         function game(userChoice){
+             const computerChoice = getCompChoice();
+             switch(userChoice + computerChoice){
+                 case "rp":
+                 case "ps":
+                 case "sr":
+                 win(userChoice, computerChoice)
+                 break;
+                 case "pr":
+                 case "sp":
+                 case "rs":
+                 lose(userChoice, computerChoice)
+                 break;
+                 case "rr":
+                 case "pp":
+                 case "ss":
+                 draw(userChoice, computerChoice)
+                 break;
+
+             }
+         }
+            
+            function theEvents(){
+                r_div.addEventListener("click", function(){
+                game("r")
+                })
+
+                p_div.addEventListener("click", function(){
+                game("p")
+                })
+
+                s_div.addEventListener("click", function(){
+                game("s")
+            })
+            }
+            getCompChoice()
+            game()
+            theEvents()
+        
+        </script>
+    </body>
+</html>
